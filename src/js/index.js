@@ -16,7 +16,7 @@ const markup = countries => {
     .map(({ name, flags }) => {
       return `<li>
           <img class="country-icon" src="${flags.svg}" alt="Flag">
-          <span class="country-title">${name.official}</span>
+          <span class="country-title">${name}</span>
           </li>`;
     })
     .join('');
@@ -27,10 +27,10 @@ const markupExpand = countries => {
     .map(({ name, capital, population, flags, languages }) => {
       return `
           <img class="country-icon" src="${flags.svg}" alt="Flag">
-          <span class="country-title">${name.official}</span>
+          <span class="country-title">${name}</span>
           <p><b>Capital:</b> ${capital}</p>
           <p><b>Population:</b> ${population}</p>
-          <p><b>Languages:</b> ${Object.values(languages).join(',')}</p>
+          <p><b>Languages:</b> ${languages.map(lang => lang.name).join(',')}</p>
         `;
     })
     .join('');

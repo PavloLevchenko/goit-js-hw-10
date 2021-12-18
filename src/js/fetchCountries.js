@@ -1,5 +1,5 @@
-const URL = 'https://restcountries.com/v3.1/name/';
-const PARAMETERS = '?fields=name,capital,population,flags,languages';
+const URL = 'https://restcountries.com/v2/name/';
+const PARAMETERS = '?fullText=true,fields=name,capital,population,flags,languages';
 
 exports.fetchCountries = (name, callback, error) => {
   const countryUrl = URL + name + PARAMETERS;
@@ -8,7 +8,15 @@ exports.fetchCountries = (name, callback, error) => {
       if (!response.ok) {
         throw new Error(response.status);
       }
-      response.json().then(callback).catch(error);
+      response
+        .json()
+        .then(data => {
+          if (data.status == 404) {
+            throw new Error(data.status);
+          }
+          callback(data);
+        })
+        .catch(error);
     })
     .catch(error);
 };
